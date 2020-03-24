@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var exphbs = require('express-handlebars');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -19,6 +20,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+app.engine("hbs", exphbs());
+app.set("view engine", "hbs");
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
@@ -35,6 +40,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
+  console.log('es ist ein fehler');
   res.render('error');
 });
 
